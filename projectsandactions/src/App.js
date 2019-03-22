@@ -11,7 +11,7 @@ class App extends Component {
   componentDidMount() {
     axios
       .get('https://sprint-api-jm.herokuapp.com/api/actions')
-      .then(res => this.setState({ actions: res }))
+      .then(res => this.setState({ actions: res.data }))
       .catch(err => console.log(err));
   }
 
