@@ -2,6 +2,7 @@ const express = require('express');
 const projectsData = require('../data/helpers/projectModel');
 const router = express.Router();
 
+//---------------------------- GET -------------------------------------//
 router.get('/', (req, res) => {
   projectsData
     .get()
@@ -25,6 +26,19 @@ router.get('/:id', (req, res) => {
     });
 });
 
+router.get('/', (req, res) => {
+  const id = req.params.id;
+  projectsData
+    .getProjectActions(id)
+    .then(project => {
+      res.json(project);
+    })
+    .catch(err => {
+      res.status(500).json({ error: 'Cant seem to find my id, officer...' });
+    });
+});
+
+//---------------------------- POST -------------------------------------//
 router.post('/', (req, res) => {
   const projectInfo = req.body;
   projectsData
@@ -37,6 +51,7 @@ router.post('/', (req, res) => {
     );
 });
 
+//---------------------------- PUT -------------------------------------//
 router.put('/', (req, res) => {
   const id = req.params.id;
   const projectBody = req.body;
@@ -61,6 +76,7 @@ router.put('/', (req, res) => {
     });
 });
 
+//---------------------------- REMOVE -------------------------------------//
 router.delete('/', (req, res) => {
   const id = req.params.id;
   projectsData
@@ -70,18 +86,6 @@ router.delete('/', (req, res) => {
     })
     .catch(err => {
       res.status(500).json({ error: 'That user must be hiding.' });
-    });
-});
-
-router.get('/', (req, res) => {
-  const id = req.params.id;
-  projectsData
-    .getProjectActions(id)
-    .then(project => {
-      res.json(project);
-    })
-    .catch(err => {
-      res.status(500).json({ error: 'Cant seem to find my id, officer...' });
     });
 });
 
